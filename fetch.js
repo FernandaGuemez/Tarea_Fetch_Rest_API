@@ -27,20 +27,24 @@ document.getElementById("get-btn").addEventListener("click", async () => {
   const text = document.getElementById("poke-name").value.toLowerCase();
   const pokemon = await fetchPokemon(text);
   localStorage.setItem("currentPokeId", pokemon.id);
-  console.log("Nombre pokemon: " + pokemon.name);
-  console.log("Peso pokemon: " + pokemon.weight);
-  console.log("ID: " + pokemon.id);
-  console.log(pokemon.sprites.front_default);
+  showInfo(
+    pokemon.name,
+    pokemon.id,
+    pokemon.weight,
+    pokemon.sprites.front_default
+  );
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
   const storedId = localStorage.getItem("currentPokeId");
   const initialId = storedId ? parseInt(storedId) : 1;
   const pokemon = await fetchPokemon(initialId);
-  console.log("Nombre pokemon: " + pokemon.name);
-  console.log("Peso pokemon: " + pokemon.weight);
-  console.log("ID: " + pokemon.id);
-  console.log(pokemon.sprites.front_default);
+  showInfo(
+    pokemon.name,
+    pokemon.id,
+    pokemon.weight,
+    pokemon.sprites.front_default
+  );
 });
 
 // obtener el anterior
@@ -51,12 +55,14 @@ document.getElementById("previous-btn").addEventListener("click", async () => {
   const currentPokeId = parseInt(localStorage.getItem("currentPokeId"));
   const newId = Math.max(1, currentPokeId - 1);
   const pokemon = await fetchPokemon(newId);
-  console.log(pokemon);
-  console.log("Nombre pokemon: " + pokemon.name);
-  console.log("Peso pokemon: " + pokemon.weight);
-  console.log("ID: " + pokemon.id);
-  console.log(pokemon.sprites.front_default);
+
   localStorage.setItem("currentPokeId", pokemon.id);
+  showInfo(
+    pokemon.name,
+    pokemon.id,
+    pokemon.weight,
+    pokemon.sprites.front_default
+  );
 });
 
 // obtener el siguiente
@@ -65,12 +71,14 @@ document.getElementById("next-btn").addEventListener("click", async () => {
   const currentPokeId = parseInt(localStorage.getItem("currentPokeId"));
   const newId = currentPokeId + 1;
   const pokemon = await fetchPokemon(newId);
-  console.log(pokemon);
-  console.log("Nombre pokemon: " + pokemon.name);
-  console.log("Peso pokemon: " + pokemon.weight);
-  console.log("ID: " + pokemon.id);
-  console.log(pokemon.sprites.front_default);
+
   localStorage.setItem("currentPokeId", pokemon.id);
+  showInfo(
+    pokemon.name,
+    pokemon.id,
+    pokemon.weight,
+    pokemon.sprites.front_default
+  );
 });
 
 const showInfo = (name, id, weight, img) => {
@@ -80,6 +88,8 @@ const showInfo = (name, id, weight, img) => {
   const imagenCarta = document.getElementById("Carta_imagen");
   nombreCarta.innerHTML = name;
   idCarta.innerHTML = id;
+  pesoPokemon.innerHTML = weight;
+  imagenCarta.src = img;
 };
 
 ////////////////// POST
